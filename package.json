@@ -13,12 +13,9 @@
     "botkit-storage-mongo": "^1.0.6",
     "cookie-parser": "^1.4.3",
     "debug": "^2.3.3",
+    "dotenv": "^6.0.0",
     "express": "^4.14.0",
-    "express-hbs": "^1.0.4",
-    "node-env-file": "^0.1.8",
-    "querystring": "^0.2.0",
-    "request": "^2.79.0",
-    "wordfilter": "^0.2.6"
+    "express-hbs": "^1.0.4"
   },
   "devDependencies": {
     "eslint": "^5.2.0",
@@ -29,10 +26,7 @@
     "eslint-plugin-standard": "^3.1.0",
     "nodemon": "^1.18.3"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nprail/octobot.git"
-  },
+  "repository": "nprail/octobot",
   "bugs": {
     "url": "https://github.com/nprail/octobot/issues"
   },

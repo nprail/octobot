@@ -1,16 +1,16 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var cookieParser = require('cookie-parser')
-var http = require('http')
-var hbs = require('express-hbs')
+const express = require('express')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const http = require('http')
+const hbs = require('express-hbs')
 const path = require('path')
 
-module.exports = function (controller) {
-  var webserver = express()
-  webserver.use(function (req, res, next) {
+module.exports = controller => {
+  const webserver = express()
+  webserver.use((req, res, next) => {
     req.rawBody = ''
 
-    req.on('data', function (chunk) {
+    req.on('data', chunk => {
       req.rawBody += chunk
     })
 
@@ -32,9 +32,9 @@ module.exports = function (controller) {
 
   webserver.use(express.static('public'))
 
-  var server = http.createServer(webserver)
+  const server = http.createServer(webserver)
 
-  server.listen(process.env.PORT || 3000, null, function () {
+  server.listen(process.env.PORT || 3000, null, () => {
     console.log(
       'Express webserver configured and listening at http://localhost:' +
         process.env.PORT || 3000
@@ -42,10 +42,10 @@ module.exports = function (controller) {
   })
 
   // import all the pre-defined routes that are present in /components/routes
-  var normalizedPathRoutes = require('path').join(__dirname, 'routes')
+  const normalizedPathRoutes = require('path').join(__dirname, 'routes')
   require('fs')
     .readdirSync(normalizedPathRoutes)
-    .forEach(function (file) {
+    .forEach(file => {
       require('./routes/' + file)(webserver, controller)
     })
 

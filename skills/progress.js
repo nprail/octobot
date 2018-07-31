@@ -1,12 +1,15 @@
 const axios = require('axios')
-const apiUrl = process.env.OCTO_API_URL
-module.exports = function (controller) {
+const api = axios.create({
+  baseURL: process.env.OCTO_API_URL,
+  headers: {
+    'x-api-key': process.env.OCTO_API_KEY
+  }
+})
+
+module.exports = controller => {
   const progressFunc = async (bot, message) => {
-    const progress = await axios.get(`${apiUrl}/job`, {
-      headers: {
-        'x-api-key': process.env.OCTO_API_KEY
-      }
-    })
+    const progress = await api.get('/job')
+
     if (progress.data.state === 'Printing') {
       bot.reply(
         message,
@@ -19,9 +22,7 @@ module.exports = function (controller) {
 
   controller.hears(
     ['^progress', 'progress'],
-    'direct_message,direct_mention',
+    'direct_message,direct_mention,mention',
     progressFunc
   )
-
-  controller.hears(['^progress', 'progress'], 'mention', progressFunc)
 }
