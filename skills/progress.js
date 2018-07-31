@@ -10,10 +10,11 @@ module.exports = function (controller) {
           'x-api-key': process.env.OCTO_API_KEY
         }
       })
-      if (progress.state === 'Printing') {
-        bot.reply(message, `Progress: ${progress.progress.completion}%`)
+      console.log(progress.data)
+      if (progress.data.state === 'Printing') {
+        bot.reply(message, `Progress: ${progress.data.progress.completion}%`)
       } else {
-        bot.reply(message, `State: ${progress.state}`)
+        bot.reply(message, `State: ${progress.data.state}`)
       }
     }
   )
