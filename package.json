@@ -1,7 +1,7 @@
 {
-  "name": "botkit-starter-slack",
+  "name": "octobot",
   "version": "0.0.2",
-  "description": "A starter kit for building a custom Slack bot with Botkit Studio",
+  "description": "OctoPrint Slack bot",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
@@ -10,7 +10,6 @@
     "body-parser": "^1.15.2",
     "botkit": "^0.6.15",
     "botkit-storage-mongo": "^1.0.6",
-    "botkit-studio-metrics": "^0.0.2",
     "cookie-parser": "^1.4.3",
     "debug": "^2.3.3",
     "express": "^4.14.0",
@@ -31,17 +30,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/howdyai/botkit-starter-slack.git"
+    "url": "https://github.com/nprail/octobot.git"
   },
   "bugs": {
-    "url": "https://github.com/howdyai/botkit-starter-slack/issues"
+    "url": "https://github.com/nprail/octobot/issues"
   },
-  "homepage": "https://github.com/howdyai/botkit-starter-slack",
+  "homepage": "https://github.com/nprail/octobot",
   "keywords": [
     "bots",
     "chatbots",
     "slack"
   ],
-  "author": "ben@howdy.ai",
-  "license": "ISC"
+  "author": "Noah Prail <noah@prail.net>",
+  "license": "MIT"
 }

@@ -1,9 +1,9 @@
 {
-  "name": "Botkit Starter Kit",
-  "description": "A starting point for building custom Slack applications",
-  "repository": "https://github.com/howdyai/botkit-starter-slack",
+  "name": "OctoBot",
+  "description": "An OctoPrint Slack bot",
+  "repository": "https://github.com/nprail/octobot",
   "keywords": ["node", "bots", "slack", "botkit"],
-  "website": "https://studio.botkit.ai/",
+  "website": "https://github.com/nprail/octobot",
   "success_url": "/",
   "addons": [
     {

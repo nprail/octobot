@@ -1,3 +1,4 @@
+const path = require('path')
 var env = require('node-env-file')
 env(__dirname + '/.env')
 
@@ -33,9 +34,10 @@ var controller = Botkit.slackbot(bot_options)
 controller.startTicking()
 
 // Set up an Express-powered webserver to expose oauth and webhook endpoints
-var webserver = require(__dirname + '/components/express_webserver.js')(
-  controller
-)
+var webserver = require(path.join(
+  __dirname,
+  '/components/express_webserver.js'
+))(controller)
 
 webserver.get('/', function (req, res) {
   res.render('index', {
@@ -51,9 +53,6 @@ require(__dirname + '/components/user_registration.js')(controller)
 // Send an onboarding message when a new team joins
 require(__dirname + '/components/onboarding.js')(controller)
 
-// enable advanced botkit studio metrics
-require('botkit-studio-metrics')(controller)
-
 var normalizedPath = require('path').join(__dirname, 'skills')
 require('fs')
   .readdirSync(normalizedPath)
@@ -66,7 +65,7 @@ function usage_tip () {
   console.log('Botkit Starter Kit')
   console.log('Execute your bot application like this:')
   console.log(
-    'clientId=<MY SLACK CLIENT ID> clientSecret=<MY CLIENT SECRET> PORT=3000 studio_token=<MY BOTKIT STUDIO TOKEN> node bot.js'
+    'clientId=<MY SLACK CLIENT ID> clientSecret=<MY CLIENT SECRET> PORT=3000 node bot.js'
   )
   console.log('Get Slack app credentials here: https://api.slack.com/apps')
   console.log('~~~~~~~~~~')

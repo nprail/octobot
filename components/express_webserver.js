@@ -3,6 +3,7 @@ var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 var http = require('http')
 var hbs = require('express-hbs')
+const path = require('path')
 
 module.exports = function (controller) {
   var webserver = express()
@@ -22,21 +23,12 @@ module.exports = function (controller) {
   // set up handlebars ready for tabs
   webserver.engine(
     'hbs',
-    hbs.express4({ partialsDir: __dirname + '/../views/partials' })
+    hbs.express4({
+      partialsDir: path.join(__dirname, '/../views/partials')
+    })
   )
   webserver.set('view engine', 'hbs')
-  webserver.set('views', __dirname + '/../views/')
-
-  // import express middlewares that are present in /components/express_middleware
-  var normalizedPathMiddleware = require('path').join(
-    __dirname,
-    'express_middleware'
-  )
-  require('fs')
-    .readdirSync(normalizedPathMiddleware)
-    .forEach(function (file) {
-      require('./express_middleware/' + file)(webserver, controller)
-    })
+  webserver.set('views', path.join(__dirname, '/../views/'))
 
   webserver.use(express.static('public'))
 
