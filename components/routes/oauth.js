@@ -51,13 +51,13 @@ module.exports = (webserver, controller) => {
             auth.identity = identity
             controller.trigger('oauth:success', [auth])
 
-            res.cookie('team_id', auth.team_id)
-            res.cookie('bot_user_id', auth.bot.bot_user_id)
-
             const url = `slack://user?team=${auth.team_id}&id=${
               auth.bot.bot_user_id
             }`
-            res.render('success', { url })
+            res.render('success', {
+              url,
+              layout: 'layouts/default'
+            })
           }
         )
       })
