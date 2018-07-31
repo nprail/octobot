@@ -8,7 +8,7 @@ module.exports = (webserver, controller) => {
     oauth: (req, res) => {
       const code = req.query.code
       const state = req.query.state
-      console.log(state)
+      debug(state)
 
       // we need to use the Slack API, so spawn a generic bot with no token
       const slackapi = controller.spawn({})
@@ -22,12 +22,12 @@ module.exports = (webserver, controller) => {
       slackapi.api.oauth.access(opts, (err, auth) => {
         if (err) {
           debug('Error confirming oauth', err)
-          return res.redirect('/login_error.html')
+          return res.redirect('/error')
         }
 
         // what scopes did we get approved for?
         const scopes = auth.scope.split(/,/)
-        console.log(scopes)
+        debug(scopes)
         // use the token we got from the oauth
         // to call auth.test to make sure the token is valid
         // but also so that we reliably have the team_id field!
@@ -36,7 +36,7 @@ module.exports = (webserver, controller) => {
           (err, identity) => {
             if (err) {
               debug('Error fetching user identity', err)
-              return res.redirect('/login_error.html')
+              return res.redirect('/error')
             }
 
             // Now we've got all we need to connect to this user's team
@@ -53,7 +53,11 @@ module.exports = (webserver, controller) => {
 
             res.cookie('team_id', auth.team_id)
             res.cookie('bot_user_id', auth.bot.bot_user_id)
-            res.redirect('/login_success.html')
+
+            const url = `slack://user?team=${auth.team_id}&id=${
+              auth.bot.bot_user_id
+            }`
+            res.render('success', { url })
           }
         )
       })
