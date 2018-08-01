@@ -4,7 +4,7 @@
   "description": "OctoPrint Slack bot",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node bot.local.js"
   },
   "dependencies": {
     "axios": "^0.18.0",

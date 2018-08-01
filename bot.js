@@ -1,18 +1,14 @@
 const path = require('path')
 require('dotenv').config()
 
-const usageTip = () => {
+if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
   console.log('~~~~~~~~~~')
-  console.log('Botkit Starter Kit')
   console.log('Execute your bot application like this:')
   console.log(
     'clientId=<MY SLACK CLIENT ID> clientSecret=<MY CLIENT SECRET> PORT=3000 node bot.js'
   )
   console.log('Get Slack app credentials here: https://api.slack.com/apps')
   console.log('~~~~~~~~~~')
-}
-if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
-  usageTip()
   process.exit(1)
 }
 
@@ -42,12 +38,9 @@ const controller = Botkit.slackbot(botOpts)
 controller.startTicking()
 
 // Set up an Express-powered webserver to expose oauth and webhook endpoints
-const webserver = require(path.join(
-  __dirname,
-  '/components/express_webserver.js'
-))(controller)
+const app = require(path.join(__dirname, '/components/express.js'))(controller)
 
-webserver.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.render('index', {
     domain: req.get('host'),
     protocol: req.protocol,
@@ -55,7 +48,7 @@ webserver.get('/', (req, res) => {
   })
 })
 
-webserver.get('/error', (req, res) => {
+app.get('/error', (req, res) => {
   res.render('error', {
     layout: 'layouts/default'
   })
@@ -74,3 +67,5 @@ require('fs')
   .forEach(file => {
     require('./skills/' + file)(controller)
   })
+
+module.exports = app

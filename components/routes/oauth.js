@@ -1,6 +1,6 @@
 const debug = require('debug')('botkit:oauth')
 
-module.exports = (webserver, controller) => {
+module.exports = (app, controller) => {
   const handler = {
     login: (req, res) => {
       res.redirect(controller.getAuthorizeURL())
@@ -68,14 +68,14 @@ module.exports = (webserver, controller) => {
   // This link will send user's off to Slack to authorize the app
   // See: https://github.com/howdyai/botkit/blob/master/readme-slack.md#custom-auth-flows
   debug('Configured /login url')
-  webserver.get('/login', handler.login)
+  app.get('/login', handler.login)
 
   // Create a /oauth link
   // This is the link that receives the postback from Slack's oauth system
   // So in Slack's config, under oauth redirect urls,
   // your value should be https://<my custom domain or IP>/oauth
   debug('Configured /oauth url')
-  webserver.get('/oauth', handler.oauth)
+  app.get('/oauth', handler.oauth)
 
   return handler
 }
